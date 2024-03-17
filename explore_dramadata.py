@@ -29,16 +29,4 @@ df_duration['end_dt'] = pd.to_datetime(df_duration['end_dt'], format='mixed')
 df_duration["duration"] = df_duration["end_dt"] - df_duration["start_dt"]
 
 
-def get_duration(df_orig, col_strt, col_end):
-    df_orig[col_strt] = pd.to_datetime(df_orig[col_strt], format='mixed')
-    df_orig[col_end] = pd.to_datetime(df_orig[col_end], format='mixed')
-    df_orig["duration"] = df_orig[col_end] - df_orig[col_strt]
-    return df_orig
-
-
-def get_score(df_orig, indicator):
-    if indicator == 'user_score':
-        return df_orig[df_orig['tot_user_score'] == df_orig['tot_user_score'].max()]
-    elif indicator == 'watched_time':
-        return df_orig[df_orig['tot_watched'] == df_orig['tot_watched'].max()]
 
