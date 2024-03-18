@@ -19,3 +19,15 @@ def get_score(df_orig, indicator):
 def draw_bar(df, y_str, x_str, title_str):
     fig = px.bar(df, y=y_str, x=x_str, title=title_str)
     return fig
+
+
+def draw_bar_genres(df, selected_genres):
+    df_genres = df[df["genres"].str.contains(selected_genres, na=False)]
+    df_genres = df_genres.sort_values("tot_user_score", ascending=False)
+    # print(df_genres)
+    df_genres = df_genres.head(30)
+    print(f'selected_genres: {selected_genres}')
+    print(f'\tdf: {df_genres["drama_name"]}')
+    fig = draw_bar(df_genres, "tot_user_score", "drama_name", "Scores by users")
+    return fig
+
