@@ -17,7 +17,8 @@ def get_score(df_orig, indicator):
 
 
 def draw_bar(df, y_str, x_str, title_str):
-    fig = px.bar(df, y=y_str, x=x_str, title=title_str)
+    label = {y_str: ' '.join(y_str.split('_')), x_str: ' '.join(x_str.split('_'))}
+    fig = px.bar(df, y=y_str, x=x_str, title=title_str, color='tot_watched', labels=label)
     return fig
 
 
