@@ -32,3 +32,11 @@ def draw_bar_genres(df, selected_genres):
     fig = draw_bar(df_genres, "tot_user_score", "drama_name", "Scores by users")
     return fig
 
+
+def draw_bar_director(df, selected_director):
+    df_director = df[df['director'].str.contains(selected_director, na=False)]
+    df_director = df_director.sort_values("popularity", ascending=False)
+    df_director = df_director.head(30)
+    fig = draw_bar(df_director, 'popularity', 'drama_name', f'Dramas by {selected_director}')
+    return fig
+
