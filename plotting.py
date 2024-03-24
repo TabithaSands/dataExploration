@@ -31,7 +31,14 @@ list_director = []
 for i in series_director:
     for item in ast.literal_eval(i):
         list_director.append(item)
-set_director = list(set(list_director))
+list_director = list(set(list_director))
+# get unique sc_writers
+series_sc = df['sc_writer'].dropna()
+list_sc = []
+for i in series_sc:
+    for item in ast.literal_eval(i):
+        list_sc.append(item)
+list_sc = list(set(list_sc))
 
 
 app = Dash(__name__)
@@ -43,14 +50,12 @@ app.layout = html.Div(
                             dcc.Graph(id="graphId")
                         ]
                     )
-
-
 @callback(
     [Output("graphId", "figure"), Output("dropdownId", "options")],
     [Input("radioId", "value"), Input("dropdownId", "value")]
 )
 def dropdown_update(value, dd_value):
-    print(f'dd_value: {dd_value}')
+    # print(f'dd_value: {dd_value}')
     if value != "genres":
         if value == "duration":
             df_duration = get_duration(df, "start_dt", "end_dt")
@@ -59,7 +64,10 @@ def dropdown_update(value, dd_value):
             return [fig, ['']]
         elif value == 'director':
             fig = draw_bar_director(df, dd_value)
-            return [fig, set_director]
+            return [fig, list_director]
+        elif value == 'sc_writer':
+            fig = draw_bar_sc_writer(df, dd_value)
+            return [fig, list_sc]
         else:
             df_comedy = df[df["genres"].str.contains('Comedy', na=False)]
             df_comedy = df_comedy.head(30)
@@ -68,7 +76,6 @@ def dropdown_update(value, dd_value):
     else:
         fig = draw_bar_genres(df, dd_value)
         return [fig, no_spaces]
-
 
 
 if __name__ == "__main__":
