@@ -40,3 +40,10 @@ def draw_bar_director(df, selected_director):
     fig = draw_bar(df_director, 'popularity', 'drama_name', f'Dramas by {selected_director}')
     return fig
 
+
+def draw_bar_sc_writer(df, selected_sc_writer):
+    df_sc_wr = df[df['sc_writer'].str.contains(selected_sc_writer, na=False)]
+    df_sc_wr = df_sc_wr.sort_values("popularity", ascending=False)
+    df_sc_wr = df_sc_wr.head(30)
+    fig = draw_bar(df_sc_wr, 'popularity', 'drama_name', f'Dramas by {selected_sc_writer}')
+    return fig
