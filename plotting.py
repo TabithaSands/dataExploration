@@ -39,6 +39,10 @@ for i in series_sc:
     for item in ast.literal_eval(i):
         list_sc.append(item)
 list_sc = list(set(list_sc))
+# get unique year list
+years = df["year"].dropna()
+years_list = years.to_list()
+year_list = list(set(years_list))
 
 
 app = Dash(__name__)
@@ -68,6 +72,9 @@ def dropdown_update(value, dd_value):
         elif value == 'sc_writer':
             fig = draw_bar_sc_writer(df, dd_value)
             return [fig, list_sc]
+        elif value == 'year':
+            fig = draw_bar_year(df, dd_value)
+            return [fig, year_list]
         else:
             df_comedy = df[df["genres"].str.contains('Comedy', na=False)]
             df_comedy = df_comedy.head(30)
