@@ -23,10 +23,11 @@ def draw_bar(df, y_str, x_str, title_str):
 
 
 def draw_bar_year(df, selected_year):
-    df_years = df[df["year"] = selected_year]
+    df_years = df[df["year"] == selected_year]
     df_years = df_years.sort_values("tot_user_score", ascending=False)
     df_years = df_years.head(30)
     fig = draw_bar(df_years, "tot_user_score", "drama_name", f"Highest scored dramas of {selected_year}")
+    return fig
 
 
 def draw_bar_genres(df, selected_genres):
