@@ -8,6 +8,7 @@ from dash import Dash, dcc, html, callback, Output, Input
 from utils import *
 
 df = pd.read_csv('/Users/tabitha/PycharmProjects/dataExploration/data/asian_drama_data/kor_drama.csv')
+act = pd.read_csv('/Users/tabitha/PycharmProjects/dataExploration/data/asian_drama_data/kor_kor_actors.csv')
 filter_by = ['drama_name', 'genres', 'director', 'sc_writer', 'tot_user_score', 'tot_watched', 'content_rt',
              'popularity', 'year', 'duration']
 # create genres clean set
@@ -43,7 +44,8 @@ list_sc = list(set(list_sc))
 years = df['year'].dropna()
 years_list = years.to_list()
 year_list = list(set(years_list))
-
+# creating list of drama names
+drama_list = act['drama_name'].tolist()
 
 
 app = Dash(__name__)
@@ -76,6 +78,9 @@ def dropdown_update(value, dd_value):
         elif value == 'year':
             fig = draw_icicle_year(df, dd_value)
             return [fig, year_list]
+        elif value == 'drama_name':
+            fig = draw_sunburst_drama(act, dd_value)
+            return [fig, drama_list]
         else:
             df_comedy = df[df['genres'].str.contains('Comedy', na=False)]
             df_comedy = df_comedy.head(30)

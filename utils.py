@@ -82,3 +82,9 @@ def draw_bar_sc_writer(df, selected_sc_writer):
     df_sc_wr = df_sc_wr.head(30)
     fig = draw_bar(df_sc_wr, 'popularity', 'drama_name', f'Dramas by {selected_sc_writer}')
     return fig
+
+
+def draw_sunburst_drama(df, selected_drama):
+    df_drama_act = df[df['drama_name'] == selected_drama][['actor_name', 'drama_name']]
+    fig = px.sunburst(df_drama_act, path=['drama_name', 'actor_name'])
+    return fig
